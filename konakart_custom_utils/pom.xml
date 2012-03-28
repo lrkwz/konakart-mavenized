@@ -1,0 +1,34 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>it.more</groupId>
+	<artifactId>konakart_custom_utils</artifactId>
+	<packaging>jar</packaging>
+	<name>Konakart utilities</name>
+	<description>Various utilities</description>
+	<parent>
+		<artifactId>konakart-parent</artifactId>
+		<groupId>it.more</groupId>
+		<version>6.0.0-SNAPSHOT</version>
+	</parent>
+	<scm>
+		<developerConnection>scm:svn:http://svn.moreinteractive.eu/repos/konakart-6/trunk/konakart-parent/konakart_utils</developerConnection>
+		<url>http://svn.moreinteractive.eu/viewvc/konakart-6/trunk/konakart-parent/konakart_utils</url>
+	</scm>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>com.konakart</groupId>
+			<artifactId>konakart</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+		</dependency>
+	</dependencies>
+</project>
