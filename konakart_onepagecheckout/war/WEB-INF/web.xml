@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app>
+
+	<!-- Default page to serve -->
+	<welcome-file-list>
+		<welcome-file>Konakart.html</welcome-file>
+	</welcome-file-list>
+  
+ 	<!-- Servlet for GWT code -->
+	<servlet>
+		<servlet-name>KonakartGWTServlet</servlet-name>
+		<display-name>KonaKart GWT App</display-name>
+		<description>KonaKart GWT App</description>
+		<servlet-class>
+			com.konakart.server.KKGWTServiceImpl
+		</servlet-class>
+		<init-param>
+		    <!-- Only ever start own engines in development mode -->
+			<param-name>startOwnEngines</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<load-on-startup>10</load-on-startup>
+	</servlet>
+
+	<!-- Mapping for GWT servlet -->
+	<servlet-mapping>
+		<servlet-name>KonakartGWTServlet</servlet-name>
+		<url-pattern>/com.konakart.Konakart/konakart</url-pattern>
+	</servlet-mapping>
+
+</web-app>

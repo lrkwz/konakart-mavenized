@@ -1,2 +1,5 @@
-/konakart_onepagecheckout/war/
+/konakart_onepagecheckout/war/WEB-INF/lib/
+/konakart_onepagecheckout/war/WEB-INF/classes/
+/konakart_onepagecheckout/war/WEB-INF/deploy/
+/konakart_onepagecheckout/war/com.konakart.Konakart/
 /konakart_onepagecheckout/log/
