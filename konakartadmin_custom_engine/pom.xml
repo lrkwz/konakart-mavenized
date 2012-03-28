@@ -8,7 +8,6 @@
 	</parent>
 	<groupId>it.more</groupId>
 	<artifactId>konakartadmin_custom_engine</artifactId>
-	<name>Customisable admin engine</name>
 	<description>Compile the customisable admin engine code</description>
 	<scm>
 		<developerConnection>scm:svn:http://svn.moreinteractive.eu/repos/konakart-6/trunk/konakart-parent</developerConnection>
@@ -35,6 +34,10 @@
 		<dependency>
 			<groupId>com.konakart</groupId>
 			<artifactId>konakart_utils</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>it.more</groupId>
+			<artifactId>konakart_custom_engine</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>commons-logging</groupId>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>it.more</groupId>
 	<artifactId>konakart-parent</artifactId>
@@ -51,14 +52,34 @@
 			</dependency>
 			<dependency>
 				<groupId>com.konakart</groupId>
+				<artifactId>konakart_fedex-api</artifactId>
+				<version>${konakart_version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.konakart</groupId>
 				<artifactId>konakartadmin</artifactId>
 				<version>${konakart_version}</version>
 			</dependency>
 			<dependency>
 				<groupId>it.more</groupId>
-				<artifactId>konakart_custom</artifactId>
-				<version>0.0.13-SNAPSHOT</version>
+				<artifactId>konakartadmin_custom</artifactId>
+				<version>${project.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>it.more</groupId>
+				<artifactId>konakart_custom</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>it.more</groupId>
+				<artifactId>konakart_custom_engine</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>it.more</groupId>
+				<artifactId>konakart_modules</artifactId>
+				<version>${project.version}</version>
+			</dependency>			
 			<dependency>
 				<groupId>jcs</groupId>
 				<artifactId>jcs</artifactId>
@@ -158,6 +179,11 @@
 				<groupId>javax.mail</groupId>
 				<artifactId>mail</artifactId>
 				<version>1.4.1</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-codec</groupId>
+				<artifactId>commons-codec</artifactId>
+				<version>1.6</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

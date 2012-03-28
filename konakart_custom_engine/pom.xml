@@ -3,7 +3,6 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>it.more</groupId>
 	<artifactId>konakart_custom_engine</artifactId>
-	<name>Customisable engine</name>
 	<description>Compile the customizable engine code</description>
 	<parent>
 		<artifactId>konakart-parent</artifactId>

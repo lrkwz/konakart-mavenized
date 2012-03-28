@@ -8,7 +8,6 @@
 	</parent>
 	<groupId>it.more</groupId>
 	<artifactId>konakartadmin_custom</artifactId>
-	<name>Customizable admin</name>
 	<scm>
 		<developerConnection>scm:svn:http://svn.moreinteractive.eu/repos/konakart-6/trunk/konakart-parent</developerConnection>
 		<url>http://svn.moreinteractive.eu/repos/konakart-6/trunk/konakart-parent</url>
@@ -47,6 +46,12 @@
 			<groupId>it.more</groupId>
 			<artifactId>konakart_custom</artifactId>
 		</dependency>
+		<!--
+		<dependency>
+			<groupId>it.more</groupId>
+			<artifactId>konakart_modules</artifactId>
+		</dependency>
+		-->
 		<dependency>
 			<groupId>org.apache.velocity</groupId>
 			<artifactId>velocity</artifactId>
@@ -54,6 +59,10 @@
 		<dependency>
 			<groupId>org.apache.velocity</groupId>
 			<artifactId>velocity-tools</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
 		</dependency>
 	</dependencies>
 </project>

@@ -3,7 +3,6 @@
 	<groupId>it.more</groupId>
 	<artifactId>konakart_custom_utils</artifactId>
 	<packaging>jar</packaging>
-	<name>Konakart utilities</name>
 	<description>Various utilities</description>
 	<parent>
 		<artifactId>konakart-parent</artifactId>

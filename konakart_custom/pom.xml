@@ -4,7 +4,6 @@
 	<groupId>it.more</groupId>
 	<artifactId>konakart_custom</artifactId>
 	<packaging>jar</packaging>
-	<name>Konakart custom struts actions</name>
 	<description>Here you can customize the business logic behavior</description>
 	<parent>
 		<artifactId>konakart-parent</artifactId>
@@ -26,6 +25,14 @@
 		<dependency>
 			<groupId>com.konakart</groupId>
 			<artifactId>konakart_app</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.konakart</groupId>
+			<artifactId>konakart_utils</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.konakart</groupId>
+			<artifactId>konakart_fedex-api</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>village</groupId>
