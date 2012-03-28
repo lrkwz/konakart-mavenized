@@ -1,0 +1,30 @@
+<module>
+
+	<!-- Inherit the core Web Toolkit stuff.                  -->
+	<inherits name='com.google.gwt.user.User'/>
+
+	<!-- Inherit the GWT I8N code.                            -->
+	<inherits name="com.google.gwt.i18n.I18N"/>
+
+	<!-- Specify the app entry point class.                   -->
+	<entry-point class='com.konakart.client.Konakart'/>
+
+	<!-- default source path -->
+	<source path="client"/>
+	<source path="app"/>
+	<!-- 
+	<source path="server"/>
+	-->
+	
+	<!-- The server-side -->  
+    <!-- DEPLOYED PATH
+		<servlet path='/com.konakart.Konakart/konakart' 
+		    class='com.konakart.server.KKGWTServiceImpl'/>
+     DEPLOYED PATH -->
+     
+    <!-- HOSTED MODE PATH -->
+        <servlet path='/konakart' 
+		    class='com.konakart.server.KKGWTServiceImpl'/>   
+    <!-- HOSTED MODE PATH -->
+
+</module>

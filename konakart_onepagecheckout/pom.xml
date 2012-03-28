@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>it.more</groupId>
+	<artifactId>konakart_onepagecheckout</artifactId>
+	<packaging>war</packaging>
+	<parent>
+		<groupId>it.more</groupId>
+		<artifactId>konakart-parent</artifactId>
+		<version>6.0.0.0-SNAPSHOT</version>
+	</parent>
+	<description>Here you can customize the konakart onepagecheckout payment system</description>
+	<scm>
+		<developerConnection>scm:svn:http://svn.moreinteractive.eu/repos/konakart-6/trunk/konakart_onepagecheckout</developerConnection>
+		<url>http://svn.moreinteractive.eu/viewvc/konakart-6/trunk/konakart_onepagecheckout</url>
+	</scm>
+	<distributionManagement>
+		<!-- use the following if you're not using a snapshot version. -->
+		<repository>
+			<id>releases.moreinteractive.eu</id>
+			<name>maven.more-releases</name>
+			<url>http://artifactory.moreinteractive.eu/artifactory/libs-releases-local</url>
+		</repository>
+		<!-- use the following if you ARE using a snapshot version. -->
+		<snapshotRepository>
+			<id>snapshots.moreinteractive.eu</id>
+			<name>artifactory-snapshots</name>
+			<url>http://artifactory.moreinteractive.eu/artifactory/libs-snapshots-local</url>
+		</snapshotRepository>
+	</distributionManagement>
+	<properties>
+		<gwt.version>2.3.0</gwt.version>
+	</properties>
+	<build>
+		<sourceDirectory>${basedir}/src</sourceDirectory>
+		<outputDirectory>${basedir}/bin</outputDirectory>		
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<!--
+					<execution>
+						<id>Compile custom gwt library</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<ant antfile="${basedir}/build.xml">
+									<target name="make_gwt_jar_in_war" />
+								</ant>
+							</tasks>
+						</configuration>
+					</execution>
+					-->
+					<execution>
+						<id>Execute gwt</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<property name="compile_classpath" refid="maven.compile.classpath"/>
+								<ant antfile="${basedir}/build.xml">
+									<target name="compile" />
+								</ant>
+							</tasks>
+						</configuration>
+					</execution>
+					<execution>
+						<id>clean ant generated files</id>
+						<phase>clean</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<ant antfile="${basedir}/build.xml">
+									<target name="clean" />
+								</ant>
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>com.sun</groupId>
+						<artifactId>tools</artifactId>
+						<version>1.5.0</version>
+						<scope>system</scope>
+						<systemPath>${java.home}/../lib/tools.jar</systemPath>
+					</dependency>
+				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.1.1</version>
+				<configuration>
+					<webXml>war/WEB-INF/web.xml</webXml>
+					<webResources>
+						<resource>
+							<directory>war/com.konakart.Konakart</directory>
+							<excludes>
+								<exclude>**/Konakart.html</exclude>
+							</excludes>
+						</resource>
+					</webResources>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-servlet</artifactId>
+			<version>${gwt.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-user</artifactId>
+			<version>${gwt.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-dev</artifactId>
+			<version>${gwt.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20090211</version>
+		</dependency>
+		<dependency>
+			<groupId>com.allen-sauer.gwt.log</groupId>
+			<artifactId>gwt-log</artifactId>
+			<version>3.1.8</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>gwt-user</artifactId>
+					<groupId>com.google.gwt</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.konakart</groupId>
+			<artifactId>konakart</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.konakart</groupId>
+			<artifactId>konakart_app</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.konakart</groupId>
+			<artifactId>konakart_utils</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-configuration</groupId>
+			<artifactId>commons-configuration</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+</project>

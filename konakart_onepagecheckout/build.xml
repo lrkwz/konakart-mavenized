@@ -1,0 +1,173 @@
+<project name="konakart_gwt_dev_kit" default="build" basedir=".">
+
+	<!-- === PROPERTIES === -->
+	<property environment="env" />
+	<property file="build.properties" />
+
+	<path id="konakart_gwt.path">
+		<pathelement path="${compile_classpath}" />
+		<!--
+		<fileset dir="./war/WEB-INF/classes">
+        	<include name="**/*.jar"/>
+		</fileset>
+		<fileset dir="./lib">
+        	<include name="**/*.jar"/>
+		</fileset>
+		-->
+	</path>
+
+	<path id="compile.path">
+		<path location="./src" />
+		<path refid="konakart_gwt.path" />
+	</path>
+
+	<path id="gwt.compile.path">
+		<path location="./war/WEB-INF/classes" />
+		<path refid="compile.path" />
+	</path>
+
+	<path id="run.path">
+		<path location="./src" />
+		<path location="./war/com.konakart.Konakart" />
+		<path location="./war/WEB-INF/classes" />
+		<path location="${KONAKART_HOME}/webapps/konakart/WEB-INF/classes" />
+		<path refid="konakart_gwt.path" />
+	</path>
+
+	<target name="clean"
+	        description="Clears away everything that's created during a build">
+
+		<echo message="Cleanup..." />
+		<delete includeEmptyDirs="true" failonerror="false" >
+			<fileset dir="./war/com.konakart.Konakart" />
+			<fileset dir="./war/WEB-INF/classes" />
+			<fileset dir="./tomcat" />
+		</delete>
+	</target>
+
+	<target name="copy_libs"
+	        description="Copy the jars required for the one page checkout">
+
+		<echo message="Copy Jars..." />
+		<copy todir="./lib">
+			<fileset dir="${KONAKART_HOME}/webapps/konakart/WEB-INF/lib" />
+		</copy>
+	</target>
+
+	<target name="copy_images"
+	        description="Copy the images required for the one page checkout">
+
+		<echo message="Copy Images..." />
+		<mkdir dir="./war/images/styles/" />
+		<copy todir="./war/images/styles/">
+			<fileset dir="${KONAKART_HOME}/webapps/konakart/images/styles" />
+		</copy>
+	</target>
+
+	<target name="compile" description="Compile the sources">
+		<echo message="Compile the sources" />
+
+		<mkdir dir="./war/WEB-INF/classes" />
+		<mkdir dir="./log" />
+
+		<javac srcdir="./src/"
+		       destdir="./war/WEB-INF/classes"
+		       fork="no"
+		       debug="on"
+		       source="${java.source}"
+		       target="${java.target}"
+		       includes="**/*.java">
+			<classpath refid="compile.path" />
+		</javac>
+
+		<echo message="GWT-Compile the sources" />
+		<!--
+			Google Web Toolkit 1.7.1
+			Compiler [-logLevel level] [-treeLogger] [-workDir dir] [-gen dir] [-style style] [-ea] [-validateOnly] [-localWorkers count] [-war dir] [-extra dir] module[s] 
+
+			where 
+			  -logLevel      The level of logging detail: ERROR, WARN, INFO, TRACE, DEBUG, SPAM, or ALL
+			  -treeLogger    Logs output in a graphical tree view
+			  -workDir       The compiler work directory (must be writeable; defaults to a system temp dir)
+			  -gen           The directory into which generated files will be written for review
+			  -style         Script output style: OBF[USCATED], PRETTY, or DETAILED (defaults to OBF)
+			  -ea            Debugging: causes the compiled output to check assert statements.
+			  -validateOnly  Validate all source code, but do not compile
+			  -localWorkers  Specifies the number of local workers to use when compiling permutations
+			  -war           The war directory to write output files into (defaults to war)
+			  -extra         The directory into which extra, non-deployed files will be written
+			and 
+			  module[s]      Specifies the name(s) of the module(s) to compile
+        -->
+		<java classname="com.google.gwt.dev.Compiler"
+		      fork="true"
+		      failonerror="true"
+		      maxmemory="256m"
+		      output="./log/GWT-Compile-KonaKart.log"
+		      timeout="5000000">
+			<arg value="-war" />
+			<arg value="./war" />
+			<arg value="-logLevel" />
+			<arg value="INFO" />
+			<arg value="-style" />
+			<arg value="OBF" />
+			<arg value="com.konakart.Konakart" />
+			<classpath refid="gwt.compile.path" />
+		</java>
+	</target>
+
+	<target name="setConfigs" description="Setup Configuration Files">
+		<echo message="Set Configs to:" />
+		<echo message="    adapter         = ${adapter}" />
+		<echo message="    driver          = ${driver}" />
+		<echo message="    user            = ${user}" />
+		<echo message="    password        = ${password}" />
+		<echo message="    url             = ${url}" />
+		<echo message="    validationQuery = ${validationQuery}" />
+		<replace file="src/konakart.properties"
+		         token="torque.database.store1.adapter              = mysql"
+		         value="torque.database.store1.adapter              = ${adapter}" />
+		<replace file="src/konakart.properties"
+		         token="torque.dsfactory.store1.connection.driver   = com.mysql.jdbc.Driver"
+		         value="torque.dsfactory.store1.connection.driver   = ${driver}" />
+		<replace file="src/konakart.properties"
+		         token="torque.dsfactory.store1.connection.url      = jdbc:mysql://localhost:3306/dbname?zeroDateTimeBehavior=convertToNull"
+		         value="torque.dsfactory.store1.connection.url      = ${url}" />
+		<replace file="src/konakart.properties"
+		         token="torque.dsfactory.store1.connection.user     = root"
+		         value="torque.dsfactory.store1.connection.user     = ${user}" />
+		<replace file="src/konakart.properties"
+		         token="torque.dsfactory.store1.connection.password = mysql"
+		         value="torque.dsfactory.store1.connection.password = ${password}" />
+		<replace file="src/konakart.properties"
+		         token="torque.dsfactory.store1.pool.validationQuery=SELECT 1"
+		         value="torque.dsfactory.store1.pool.validationQuery=${validationQuery}" />
+	</target>
+
+	<target name="run" description="Run it">
+		<java classname="com.google.gwt.dev.DevMode"
+		      fork="true"
+		      maxmemory="256m"
+		      failonerror="true">
+			<arg value="-logLevel" />
+			<arg value="WARN" />
+			<arg value="-startupUrl" />
+			<arg value="./com.konakart.Konakart/Konakart.html" />
+			<arg value="com.konakart.Konakart" />
+			<classpath refid="run.path" />
+		</java>
+	</target>
+
+	<target name="build"
+	        description="Compiles and runs the GWT app"
+	        depends="
+					clean,
+					copy_libs,
+					copy_images,
+          			compile,
+					setConfigs,
+					run
+		    		"
+	/>
+
+</project>
