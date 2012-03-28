@@ -9,8 +9,8 @@
 		<version>6.0.0-SNAPSHOT</version>
 	</parent>
 	<scm>
-		<developerConnection>scm:svn:http://svn.moreinteractive.eu/repos/konakart-6/trunk/konakart-parent</developerConnection>
-		<url>http://svn.moreinteractive.eu/repos/konakart-6/trunk/konakart-parent</url>
+		<developerConnection>scm:svn:http://svn.moreinteractive.eu/repos/konakart-6/trunk/konakart_custom_engine</developerConnection>
+		<url>http://svn.moreinteractive.eu/viewvc/konakart-6/trunk/konakart_custom_engine</url>
 	</scm>
 	<dependencies>
 		<dependency>

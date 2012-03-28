@@ -8,8 +8,8 @@
 	<packaging>pom</packaging>
 	<name>konakart all custom modules</name>
 	<scm>
-		<developerConnection>scm:svn:http://svn.moreinteractive.eu/repos/konakart/trunk-6/konakart-parent</developerConnection>
-		<url>http://svn.moreinteractive.eu/repos/konakart-6/trunk/konakart-parent</url>
+		<developerConnection>scm:svn:http://svn.moreinteractive.eu/repos/konakart-6/trunk/konakart-parent</developerConnection>
+		<url>http://svn.moreinteractive.eu/viewvc/konakart-6/trunk/konakart-parent</url>
 	</scm>
 	<properties>
 		<konakart_version>6.0.0</konakart_version>

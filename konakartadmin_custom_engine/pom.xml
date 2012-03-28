@@ -9,8 +9,8 @@
 	<artifactId>konakartadmin_custom_engine</artifactId>
 	<description>Compile the customisable admin engine code</description>
 	<scm>
-		<developerConnection>scm:svn:http://svn.moreinteractive.eu/repos/konakart-6/trunk/konakart-parent</developerConnection>
-		<url>http://svn.moreinteractive.eu/repos/konakart-6/trunk/konakart-parent</url>
+		<developerConnection>scm:svn:http://svn.moreinteractive.eu/repos/konakart-6/trunk/konakartadmin_custom_engine</developerConnection>
+		<url>http://svn.moreinteractive.eu/viewvc/konakart-6/trunk/konakartadmin_custom_engine</url>
 	</scm>
 	<build>
 		<plugins>

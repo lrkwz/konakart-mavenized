@@ -9,8 +9,8 @@
 	<artifactId>konakart_modules</artifactId>
 	<description>Compile the customisable module code ordertotal, shipping, payment</description>
 	<scm>
-		<developerConnection>scm:svn:http://svn.moreinteractive.eu/repos/konakart-6/trunk/konakart-parent</developerConnection>
-		<url>http://svn.moreinteractive.eu/repos/konakart-6/trunk/konakart-parent</url>
+		<developerConnection>scm:svn:http://svn.moreinteractive.eu/repos/konakart-6/trunk/konakart_modules</developerConnection>
+		<url>http://svn.moreinteractive.eu/viewvc/konakart-6/trunk/konakart_modules</url>
 	</scm>
 	<dependencies>
 		<dependency>

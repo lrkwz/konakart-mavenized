@@ -8,8 +8,8 @@
 	</parent>
 	<artifactId>konakartadmin_custom</artifactId>
 	<scm>
-		<developerConnection>scm:svn:http://svn.moreinteractive.eu/repos/konakart-6/trunk/konakart-parent</developerConnection>
-		<url>http://svn.moreinteractive.eu/repos/konakart-6/trunk/konakart-parent</url>
+		<developerConnection>scm:svn:http://svn.moreinteractive.eu/repos/konakart-6/trunk/konakartadmin_custom</developerConnection>
+		<url>http://svn.moreinteractive.eu/viewvc/konakart-6/trunk/konakartadmin_custom</url>
 	</scm>
 	<build>
 		<plugins>
