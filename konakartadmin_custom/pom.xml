@@ -40,12 +40,6 @@
 			<groupId>it.more</groupId>
 			<artifactId>konakart_custom</artifactId>
 		</dependency>
-		<!--
-		<dependency>
-			<groupId>it.more</groupId>
-			<artifactId>konakart_modules</artifactId>
-		</dependency>
-		-->
 		<dependency>
 			<groupId>org.apache.velocity</groupId>
 			<artifactId>velocity</artifactId>
