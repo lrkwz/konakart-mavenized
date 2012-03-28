@@ -6,7 +6,6 @@
 		<groupId>it.more</groupId>
 		<version>6.0.0-SNAPSHOT</version>
 	</parent>
-	<groupId>it.more</groupId>
 	<artifactId>konakartadmin_custom</artifactId>
 	<scm>
 		<developerConnection>scm:svn:http://svn.moreinteractive.eu/repos/konakart-6/trunk/konakart-parent</developerConnection>
@@ -17,7 +16,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.1</version>
 				<configuration>
 					<source>1.5</source>
 					<target>1.5</target>
@@ -33,10 +31,6 @@
 		<dependency>
 			<groupId>com.konakart</groupId>
 			<artifactId>konakartadmin</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>village</groupId>
-			<artifactId>village</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>torque</groupId>
