@@ -33,10 +33,6 @@
 			<artifactId>konakartadmin</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>torque</groupId>
-			<artifactId>torque</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>it.more</groupId>
 			<artifactId>konakart_custom</artifactId>
 		</dependency>
@@ -51,6 +47,10 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>struts</groupId>
+			<artifactId>struts</artifactId>
 		</dependency>
 	</dependencies>
 </project>

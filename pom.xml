@@ -59,6 +59,16 @@
 			</dependency>
 			<dependency>
 				<groupId>com.konakart</groupId>
+				<artifactId>konakart_torque-3.3</artifactId>
+				<version>${konakart_version}</version>
+			</dependency>
+			<dependency>
+				<groupId>torque</groupId>
+				<artifactId>village</artifactId>
+				<version>3.3</version>
+			</dependency>
+			<dependency>
+				<groupId>com.konakart</groupId>
 				<artifactId>konakartadmin</artifactId>
 				<version>${konakart_version}</version>
 			</dependency>
@@ -81,7 +91,7 @@
 				<groupId>it.more</groupId>
 				<artifactId>konakart_modules</artifactId>
 				<version>${project.version}</version>
-			</dependency>			
+			</dependency>
 			<dependency>
 				<groupId>jcs</groupId>
 				<artifactId>jcs</artifactId>
@@ -100,53 +110,6 @@
 				<version>1.7</version>
 			</dependency>
 			<dependency>
-				<groupId>torque</groupId>
-				<artifactId>torque</artifactId>
-				<version>3.3</version>
-				<exclusions>
-					<exclusion>
-						<artifactId>fulcrum-testcontainer</artifactId>
-						<groupId>fulcrum</groupId>
-					</exclusion>
-					<exclusion>
-						<artifactId>fulcrum-yaafi</artifactId>
-						<groupId>fulcrum</groupId>
-					</exclusion>
-					<exclusion>
-						<groupId>xml-apis</groupId>
-						<artifactId>xml-apis</artifactId>
-					</exclusion>
-					<exclusion>
-						<groupId>xml-apis</groupId>
-						<artifactId>xmlParserAPIs</artifactId>
-					</exclusion>
-					<exclusion>
-						<artifactId>servlet-api</artifactId>
-						<groupId>javax.servlet</groupId>
-					</exclusion>
-					<exclusion>
-						<artifactId>xerces</artifactId>
-						<groupId>xerces</groupId>
-					</exclusion>
-					<exclusion>
-						<artifactId>xalan</artifactId>
-						<groupId>xalan</groupId>
-					</exclusion>
-					<exclusion>
-						<artifactId>velocity</artifactId>
-						<groupId>velocity</groupId>
-					</exclusion>
-					<exclusion>
-						<artifactId>geronimo-spec-javamail</artifactId>
-						<groupId>geronimo-spec</groupId>
-					</exclusion>
-					<exclusion>
-						<artifactId>geronimo-spec-jms</artifactId>
-						<groupId>geronimo-spec</groupId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<dependency>
 				<groupId>javax.servlet</groupId>
 				<artifactId>servlet-api</artifactId>
 				<version>2.5</version>
@@ -160,7 +123,7 @@
 			<dependency>
 				<groupId>commons-lang</groupId>
 				<artifactId>commons-lang</artifactId>
-				<version>2.5</version>
+				<version>2.6</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.velocity</groupId>
@@ -183,9 +146,9 @@
 				<version>1.6</version>
 			</dependency>
 			<dependency>
-				<groupId>org.apache.struts</groupId>
-				<artifactId>struts-core</artifactId>
-				<version>1.3.10</version>
+				<groupId>struts</groupId>
+				<artifactId>struts</artifactId>
+				<version>1.2.9</version>
 			</dependency>
 			<dependency>
 				<groupId>axis</groupId>
@@ -236,6 +199,7 @@
 	</build>
 	<modules>
 		<module>konakart_custom</module>
+		<module>konakart_custom_utils</module>
 		<module>konakart_custom_engine</module>
 		<module>konakart_modules</module>
 		<module>konakartadmin_custom</module>
