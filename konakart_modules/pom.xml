@@ -15,19 +15,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.konakart</groupId>
-			<artifactId>konakart</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.konakart</groupId>
-			<artifactId>konakart_app</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.konakart</groupId>
 			<artifactId>konakart_fedex</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.konakart</groupId>
-			<artifactId>konakartadmin</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.konakart</groupId>
