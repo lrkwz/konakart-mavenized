@@ -210,5 +210,6 @@
 		<module>konakartadmin_custom</module>
 		<module>konakartadmin_custom_engine</module>
 		<module>konakart_onepagecheckout</module>
+		<module>konakart_gestpay</module>
 	</modules>
 </project>
