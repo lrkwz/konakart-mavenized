@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<artifactId>konakart-parent</artifactId>
@@ -13,31 +14,19 @@
 		<url>http://svn.moreinteractive.eu/viewvc/konakart-6/trunk/konakart_gestpay</url>
 	</scm>
 	<dependencies>
-		<!--
+		<!-- <dependency> <groupId>com.konakart</groupId> <artifactId>konakart</artifactId> 
+			</dependency> <dependency> <groupId>com.konakart</groupId> <artifactId>konakart_app</artifactId> 
+			</dependency> <dependency> <groupId>com.konakart</groupId> <artifactId>konakartadmin</artifactId> 
+			</dependency> <dependency> <groupId>commons-configuration</groupId> <artifactId>commons-configuration</artifactId> 
+			</dependency> <dependency> <groupId>com.konakart</groupId> <artifactId>konakart_utils</artifactId> 
+			</dependency> -->
 		<dependency>
-			<groupId>com.konakart</groupId>
-			<artifactId>konakart</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.konakart</groupId>
-			<artifactId>konakart_app</artifactId>
+			<groupId>it.more</groupId>
+			<artifactId>konakart_custom</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.konakart</groupId>
 			<artifactId>konakartadmin</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>commons-configuration</groupId>
-			<artifactId>commons-configuration</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.konakart</groupId>
-			<artifactId>konakart_utils</artifactId>
-		</dependency>
-		-->
-		<dependency>
-			<groupId>it.more</groupId>
-			<artifactId>konakart_custom</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
