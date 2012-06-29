@@ -31,106 +31,102 @@ import com.konakart.bl.ConfigConstants;
 /**
  * Gets called to search by manufacturers based on the manuId parameter.
  */
-public class SearchByManufacturerByLinkSubmitAction extends ManufacturerBaseAction
-{
+public class SearchByManufacturerByLinkSubmitAction extends
+		ManufacturerBaseAction {
 
-    /**
-     * 
-     * @param mapping
-     *            The ActionMapping used to select this instance
-     * @param form
-     *            The optional ActionForm bean for this request (if any)
-     * @param request
-     *            The HTTP request we are processing
-     * @param response
-     *            The HTTP response we are creating
-     * 
-     */
-    public ActionForward execute(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response)
-    {
+	/**
+	 * 
+	 * @param mapping
+	 *            The ActionMapping used to select this instance
+	 * @param form
+	 *            The optional ActionForm bean for this request (if any)
+	 * @param request
+	 *            The HTTP request we are processing
+	 * @param response
+	 *            The HTTP response we are creating
+	 * 
+	 */
+	public ActionForward execute(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
 
-        try
-        {
-            int custId;
+		try {
+			int custId;
 
-            KKAppEng kkAppEng = this.getKKAppEng(request, response);
+			KKAppEng kkAppEng = this.getKKAppEng(request, response);
 
-            custId = this.loggedIn(request, response, kkAppEng, null);
+			custId = this.loggedIn(request, response, kkAppEng, null);
 
-            // Ensure we are using the correct protocol. Redirect if not.
-            ActionForward redirForward = checkSSL(kkAppEng, request, custId, /* forceSSL */false);
-            if (redirForward != null)
-            {
-                return redirForward;
-            }
+			// Ensure we are using the correct protocol. Redirect if not.
+			ActionForward redirForward = checkSSL(kkAppEng, request, custId, /* forceSSL */
+					false);
+			if (redirForward != null) {
+				return redirForward;
+			}
 
-            String manuId = request.getParameter("manuId");
-            if (manuId == null)
-            {
-                return mapping.findForward("Welcome");
-            }
+			String manuId = request.getParameter("manuId");
+			if (manuId == null) {
+				return mapping.findForward("Welcome");
+			}
 
-            // Test to see whether the manuId is an integer
-            int manuIdInt;
-            try
-            {
-                manuIdInt = new Integer(manuId).intValue();
-            } catch (Exception e)
-            {
-                return mapping.findForward("Welcome");
-            }
+			// Test to see whether the manuId is an integer
+			int manuIdInt;
+			try {
+				manuIdInt = new Integer(manuId).intValue();
+			} catch (Exception e) {
+				return mapping.findForward("Welcome");
+			}
 
-            ManufacturerIf selectedManu = kkAppEng.getProductMgr().getSelectedManufacturer();
+			ManufacturerIf selectedManu = kkAppEng.getProductMgr()
+					.getSelectedManufacturer();
 
-            // Check to see whether we are here after the SEO redirect.
-            int seoFormat = kkAppEng.getConfigAsInt(ConfigConstants.SEO_URL_FORMAT);
-            if (seoFormat == SEO_DIRECTORY)
-            {
-                if (request.getParameter("seo") != null)
-                {
-                    if (selectedManu == null || selectedManu.getId() != manuIdInt)
-                    {
-                        // Instruct the engine to get the data
-                        kkAppEng.getProductMgr().fetchProductsPerManufacturer(manuIdInt);
-                    }
-                    manageRedir(kkAppEng, request);
-                    return mapping.findForward("SearchByManufacturerSubmit");
-                }
-            } else if (seoFormat == SEO_PARAMETERS)
-            {
-                if (selectedManu != null
-                        && selectedManu.getId() == manuIdInt
-                        && request.getParameter(getCatMessage(request, "seo.product.manufacturer")) != null)
-                {
-                    manageRedir(kkAppEng, request);
-                    return mapping.findForward("SearchByManufacturerSubmit");
-                }
-            }
+			// Check to see whether we are here after the SEO redirect.
+			int seoFormat = kkAppEng
+					.getConfigAsInt(ConfigConstants.SEO_URL_FORMAT);
+			if (seoFormat == SEO_DIRECTORY) {
+				if (request.getParameter("seo") != null) {
+					if (selectedManu == null
+							|| selectedManu.getId() != manuIdInt) {
+						// Instruct the engine to get the data
+						kkAppEng.getProductMgr().fetchProductsPerManufacturer(
+								manuIdInt);
+					}
+					manageRedir(kkAppEng, request);
+					return mapping.findForward("SearchByManufacturerSubmit");
+				}
+			} else if (seoFormat == SEO_PARAMETERS) {
+				if (selectedManu != null
+						&& selectedManu.getId() == manuIdInt
+						&& request.getParameter(getCatMessage(request,
+								"seo.product.manufacturer")) != null) {
+					manageRedir(kkAppEng, request);
+					return mapping.findForward("SearchByManufacturerSubmit");
+				}
+			}
 
-            // Instruct the engine to get the data
-            kkAppEng.getProductMgr().fetchProductsPerManufacturer(manuIdInt);
+			// Instruct the engine to get the data
+			kkAppEng.getProductMgr().fetchProductsPerManufacturer(manuIdInt);
 
-            /*
-             * If the url we get from the request is set to null (as is sometimes the case when we
-             * have been implemented as a portlet), then we mustn't do a redirect. Also don't do it
-             * if SEO is switched off.
-             */
-            if (request.getRequestURL() == null
-                    || !(seoFormat == SEO_DIRECTORY || seoFormat == SEO_PARAMETERS))
-            {
-                manageRedir(kkAppEng, request);
-                return mapping.findForward("SearchByManufacturerSubmit");
-            }
+			/*
+			 * If the url we get from the request is set to null (as is
+			 * sometimes the case when we have been implemented as a portlet),
+			 * then we mustn't do a redirect. Also don't do it if SEO is
+			 * switched off.
+			 */
+			if (request.getRequestURL() == null
+					|| !(seoFormat == SEO_DIRECTORY || seoFormat == SEO_PARAMETERS)) {
+				manageRedir(kkAppEng, request);
+				return mapping.findForward("SearchByManufacturerSubmit");
+			}
 
-            // Do a 301 redirect (permanent) so that search engines index the URL
-            manageAction(kkAppEng, request, response, seoFormat, SEO_SEARCH_BY_MANU_BY_LINK_CODE);
+			// Do a 301 redirect (permanent) so that search engines index the
+			// URL
+			manageAction(kkAppEng, request, response, seoFormat,
+					SEO_SEARCH_BY_MANU_BY_LINK_CODE);
 
-            return null;
-        } catch (Exception e)
-        {
-            return mapping.findForward(super.handleException(request, e));
-        }
-    }
+			return null;
+		} catch (Exception e) {
+			return mapping.findForward(super.handleException(request, e));
+		}
+	}
 
 }

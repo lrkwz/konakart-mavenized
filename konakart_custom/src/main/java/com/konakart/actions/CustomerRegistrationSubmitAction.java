@@ -250,6 +250,7 @@ public class CustomerRegistrationSubmitAction extends BaseAction
             if (e.getMessage() != null
                     && e.getMessage().indexOf("com.konakart.app.KKInvalidZoneException") > -1)
             {
+            	log.debug(e.getMessage(), e);
                 try
                 {
                     if (kkAppEng != null)
