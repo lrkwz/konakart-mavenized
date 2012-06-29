@@ -3,24 +3,21 @@ package it.more.konakartadmin.bl;
 import it.more.konakart.util.InvoiceUtils;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.torque.TorqueException;
+import org.apache.torque.util.BasePeer;
 import org.apache.velocity.VelocityContext;
 
-import com.konakart.app.KKException;
-import com.konakart.app.Order;
+import com.konakart.bl.KKCriteria;
 import com.konakart.bl.LanguageMgr;
+import com.konakart.om.BaseOrdersPeer;
 import com.konakartadmin.app.AdminOrder;
-import com.konakartadmin.app.KKAdminException;
 import com.konakartadmin.appif.KKAdminIf;
 import com.konakartadmin.bl.AdminOrderIntegrationMgr;
-import com.workingdogs.village.DataSetException;
 
 /**
  * A default implementation of the AdminOrderIntegrationMgrInterface
@@ -89,7 +86,10 @@ public class AdminInvoiceOrderIntegrationMgr extends AdminOrderIntegrationMgr {
 			invoiceUtils.setConversionCommand(getAdminConfigMgr());
 			invoiceUtils.setTemplateBaseDirectory(getAdminConfigMgr());
 
-			invoiceUtils.createInvoice(orderId, velocityContext, locale);
+			order.setInvoiceFilename(invoiceUtils.createInvoice(orderId,
+					velocityContext, locale));
+
+			saveOrder(order);
 
 		} catch (Exception e) {
 			log.error("Cannot print invoice "
@@ -98,6 +98,20 @@ public class AdminInvoiceOrderIntegrationMgr extends AdminOrderIntegrationMgr {
 				log.debug("Cannot print invoice " + e, e);
 			}
 		}
-
 	}
+
+	private void saveOrder(AdminOrder order) throws TorqueException {
+		// Update the invoice filename on the order
+		KKCriteria updateC = getNewCriteria();
+		KKCriteria selectC = getNewCriteria();
+		updateC.addForInsert(BaseOrdersPeer.INVOICE_FILENAME,
+				order.getInvoiceFilename());
+		selectC.add(BaseOrdersPeer.ORDERS_ID, order.getId());
+		BasePeer.doUpdate(selectC, updateC);
+		if (log.isDebugEnabled()) {
+			log.debug("Updated invoice filename (" + order.getInvoiceFilename()
+					+ ") on order " + order.getId());
+		}
+	}
+
 }

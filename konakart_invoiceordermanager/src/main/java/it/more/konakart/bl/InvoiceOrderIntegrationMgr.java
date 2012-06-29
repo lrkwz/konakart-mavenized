@@ -9,6 +9,7 @@ import java.util.Locale;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.torque.TorqueException;
 import org.apache.torque.util.BasePeer;
 import org.apache.velocity.VelocityContext;
 
@@ -81,7 +82,7 @@ public class InvoiceOrderIntegrationMgr extends OrderIntegrationMgr {
 
 				velocityContext.put("locale", new Locale(locale));
 
-				InvoiceUtils invoiceUtils = new InvoiceUtils( getEng() );
+				InvoiceUtils invoiceUtils = new InvoiceUtils(getEng());
 				invoiceUtils.setBaseDir(getConfigMgr());
 				invoiceUtils.setConversionCommand(getConfigMgr());
 				invoiceUtils.setTemplateBaseDirectory(getConfigMgr());
@@ -96,18 +97,7 @@ public class InvoiceOrderIntegrationMgr extends OrderIntegrationMgr {
 				order.setInvoiceFilename(invoiceUtils.createInvoice(orderId,
 						velocityContext, locale));
 
-				// Update the invoice filename on the order
-				KKCriteria updateC = getNewCriteria();
-				KKCriteria selectC = getNewCriteria();
-				updateC.addForInsert(BaseOrdersPeer.INVOICE_FILENAME,
-						order.getInvoiceFilename());
-				selectC.add(BaseOrdersPeer.ORDERS_ID, order.getId());
-				BasePeer.doUpdate(selectC, updateC);
-				if (log.isDebugEnabled()) {
-					log.debug("Updated invoice filename ("
-							+ order.getInvoiceFilename() + ") on order "
-							+ order.getId());
-				}
+				saveOrder(order);
 
 			} catch (KKException e) {
 				String msg = "KKError changing status for order id: " + orderId
@@ -126,6 +116,20 @@ public class InvoiceOrderIntegrationMgr extends OrderIntegrationMgr {
 					log.error(msg);
 				}
 			}
+		}
+	}
+
+	private void saveOrder(Order order) throws TorqueException {
+		// Update the invoice filename on the order
+		KKCriteria updateC = getNewCriteria();
+		KKCriteria selectC = getNewCriteria();
+		updateC.addForInsert(BaseOrdersPeer.INVOICE_FILENAME,
+				order.getInvoiceFilename());
+		selectC.add(BaseOrdersPeer.ORDERS_ID, order.getId());
+		BasePeer.doUpdate(selectC, updateC);
+		if (log.isDebugEnabled()) {
+			log.debug("Updated invoice filename (" + order.getInvoiceFilename()
+					+ ") on order " + order.getId());
 		}
 	}
 }

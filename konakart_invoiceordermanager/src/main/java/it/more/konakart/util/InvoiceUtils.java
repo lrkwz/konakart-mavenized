@@ -1,13 +1,11 @@
 package it.more.konakart.util;
 
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.Writer;
 import java.net.URLDecoder;
 import java.security.InvalidParameterException;
-import java.util.Properties;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -56,43 +54,35 @@ public class InvoiceUtils {
 	private static final String ORDER_PDF_DIRECTORY = "ORDER_PDF_DIRECTORY";
 	private static final String ORDER_PDF_COMMAND = "ORDER_PDF_COMMAND";
 
-	  protected VelocityEngine getVelocityEngine()
-			    throws Exception
-			  {
-			    VelocityEngine localVelocityEngine = new VelocityEngine();
-			    localVelocityEngine.setProperty("file.resource.loader.path", "");
-			    String str = PropertyFileFinder.findProperties("konakart_velocity.properties");
-			    if (log.isDebugEnabled())
-			      log.debug("Velocity Properties file: " + str);
-			    localVelocityEngine.init(URLDecoder.decode(str, "UTF-8"));
-			    return localVelocityEngine;
-			  }
-/*
-	public VelocityEngine getVelocityEngine() throws Exception {
-		Properties localProperties = new Properties();
-		if (getVelocityLogLocn() != null)
-			if (getVelocityLogLocn().trim().length() == 0) {
-				log.debug("Velocity log is disabled");
-				localProperties.setProperty("runtime.log.logsystem.class",
-						"org.apache.velocity.runtime.log.NullLogSystem");
-			} else {
-				log.debug("Velocity log = " + getVelocityLogLocn());
-				localProperties
-						.setProperty("runtime.log", getVelocityLogLocn());
-			}
-		else
-			log.debug("Using default velocity log");
-		localProperties.setProperty("input.encoding", "UTF-8");
-		localProperties.setProperty("output.encoding", "UTF-8");
-		localProperties.setProperty("resource.loader", "class");
-		localProperties
-				.setProperty("class.resource.loader.class",
-						"org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+	protected VelocityEngine getVelocityEngine() throws Exception {
 		VelocityEngine localVelocityEngine = new VelocityEngine();
-		localVelocityEngine.init(localProperties);
+		localVelocityEngine.setProperty("file.resource.loader.path", "");
+		String str = PropertyFileFinder
+				.findProperties("konakart_velocity.properties");
+		if (log.isDebugEnabled())
+			log.debug("Velocity Properties file: " + str);
+		localVelocityEngine.init(URLDecoder.decode(str, "UTF-8"));
 		return localVelocityEngine;
 	}
-*/
+
+	/*
+	 * public VelocityEngine getVelocityEngine() throws Exception { Properties
+	 * localProperties = new Properties(); if (getVelocityLogLocn() != null) if
+	 * (getVelocityLogLocn().trim().length() == 0) {
+	 * log.debug("Velocity log is disabled");
+	 * localProperties.setProperty("runtime.log.logsystem.class",
+	 * "org.apache.velocity.runtime.log.NullLogSystem"); } else {
+	 * log.debug("Velocity log = " + getVelocityLogLocn()); localProperties
+	 * .setProperty("runtime.log", getVelocityLogLocn()); } else
+	 * log.debug("Using default velocity log");
+	 * localProperties.setProperty("input.encoding", "UTF-8");
+	 * localProperties.setProperty("output.encoding", "UTF-8");
+	 * localProperties.setProperty("resource.loader", "class"); localProperties
+	 * .setProperty("class.resource.loader.class",
+	 * "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+	 * VelocityEngine localVelocityEngine = new VelocityEngine();
+	 * localVelocityEngine.init(localProperties); return localVelocityEngine; }
+	 */
 	protected String getVelocityLogLocn() {
 		return this.velocityLogLocn;
 	}
@@ -227,5 +217,4 @@ public class InvoiceUtils {
 		return storeId;
 
 	}
-
 }
