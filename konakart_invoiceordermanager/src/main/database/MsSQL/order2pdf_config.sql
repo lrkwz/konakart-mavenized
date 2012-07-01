@@ -19,26 +19,6 @@ INSERT INTO [dbo].[configuration]
            ,[last_modified]
            ,[date_added])
      VALUES
-           ('Directory Fatture'
-           ,'ORDER_PDF_FATTURA_DIRECTORY'
-           ,'C:\Programmi\KonaKart\webapps\konakart\invoices'
-           ,''
-           ,9
-           ,1
-           ,getDate()
-           ,getDate())
-GO
-
-INSERT INTO [dbo].[configuration]
-           ([configuration_title]
-           ,[configuration_key]
-           ,[configuration_value]
-           ,[configuration_description]
-           ,[configuration_group_id]
-           ,[sort_order]
-           ,[last_modified]
-           ,[date_added])
-     VALUES
            ('HtmlToPdf CommandFattura'
            ,'ORDER_PDF_FATTURA_COMMAND'
            ,'wkhtmltopdf --quiet %s %s'
@@ -70,25 +50,6 @@ INSERT INTO [dbo].[configuration]
            ,getDate())
 GO
 
-INSERT INTO [dbo].[configuration]
-           ([configuration_title]
-           ,[configuration_key]
-           ,[configuration_value]
-           ,[configuration_description]
-           ,[configuration_group_id]
-           ,[sort_order]
-           ,[last_modified]
-           ,[date_added])
-     VALUES
-           ('HtmlToPdf CommandBolle'
-           ,'ORDER_PDF_COMMAND'
-           ,'wkhtmltopdf --quiet %s %s'
-           ,''
-           ,9
-           ,1
-           ,getDate()
-           ,getDate())
-GO
 
 
 
