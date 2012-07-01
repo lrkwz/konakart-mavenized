@@ -19,7 +19,7 @@ INSERT INTO [dbo].[configuration]
            ,[last_modified]
            ,[date_added])
      VALUES
-           ('HtmlToPdf CommandFattura'
+           ('Command to transform html invoice to pdf (first %s will be replaced with the source html file, the latter with the destination)'
            ,'ORDER_PDF_FATTURA_COMMAND'
            ,'wkhtmltopdf --quiet %s %s'
            ,''
@@ -40,7 +40,7 @@ INSERT INTO [dbo].[configuration]
            ,[last_modified]
            ,[date_added])
      VALUES
-           ('Directory Bolle'
+           ('Invoice directory'
            ,'ORDER_PDF_DIRECTORY'
            ,'C:\Programmi\KonaKart\webapps\konakart\invoices'
            ,''
