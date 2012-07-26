@@ -91,5 +91,10 @@ public class GestpayConstants {
 	public static final int RET9 = -9;
 	public static final String RET7_DESC = "Callback error: no shop id sent by the gateway";
 	public static final int RET7 = -7;
+	public static final String MODULE_PAYMENT_GESTPAY_SEND_BUYER_NAME = "MODULE_PAYMENT_GESTPAY_SEND_BUYER_NAME";
+	public static final String MODULE_PAYMENT_GESTPAY_SEND_BUYER_EMAIL = "MODULE_PAYMENT_GESTPAY_SEND_BUYER_EMAIL";
+	public static final String MODULE_PAYMENT_GESTPAY_SEND_BUYER_LANGUAGE = "MODULE_PAYMENT_GESTPAY_SEND_BUYER_LANGUAGE";
+	public static final String MODULE_PAYMENT_GESTPAY_SEND_CUSTOMINFO = "MODULE_PAYMENT_GESTPAY_SEND_CUSTOMINFO";
+	public static final String MODULE_PAYMENT_GESTPAY_CURRENCY = "MODULE_PAYMENT_GESTPAY_CURRENCY";
 
 }

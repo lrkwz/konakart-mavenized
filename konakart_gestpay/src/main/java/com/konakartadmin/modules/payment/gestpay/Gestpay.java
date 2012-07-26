@@ -110,7 +110,7 @@ public class Gestpay extends PaymentModule {
 		configs[i] = new KKConfiguration(
 		/* title */"Request URL", GestpayConstants.MODULE_PAYMENT_GESTPAY_REQUEST_URL,
 		/* value */"https://ecomm.sella.it/gestpay/pagam.asp",
-		/* description */"URL used by KonaKart to send the transaction details",
+		/* description */"URL used by KonaKart to send the transaction details (usually https://ecomm.sella.it/gestpay/pagam.asp for production use, https://testecomm.sella.it/gestpay/pagam.asp for test mode)",
 		/* groupId */groupId,
 		/* sortO */i++,
 		/* useFun */"",
@@ -118,9 +118,49 @@ public class Gestpay extends PaymentModule {
 		/* dateAdd */now);
 
 		configs[i] = new KKConfiguration(
-		/* title */"Is the shop in test mode ?", GestpayConstants.MODULE_PAYMENT_GESTPAY_TEST_MODE,
+		/* title */"Send buyer name", GestpayConstants.MODULE_PAYMENT_GESTPAY_SEND_BUYER_NAME,
 		/* value */ "true",
-		/* description */"True test mode, false production site",
+		/* description */"Depending on sella contract the payment server can accept the buyer name",
+		/* groupId */groupId,
+		/* sortO */i++,
+		/* useFun */"",
+		/* setFun */"tep_cfg_select_option(array('true', 'false'), ",
+		/* dateAdd */now);
+
+		configs[i] = new KKConfiguration(
+		/* title */"Send buyer email", GestpayConstants.MODULE_PAYMENT_GESTPAY_SEND_BUYER_EMAIL,
+		/* value */ "true",
+		/* description */"Depending on sella contract the payment server can accept the buyer email",
+		/* groupId */groupId,
+		/* sortO */i++,
+		/* useFun */"",
+		/* setFun */"tep_cfg_select_option(array('true', 'false'), ",
+		/* dateAdd */now);
+
+		configs[i] = new KKConfiguration(
+		/* title */"Is the shop in test mode ?", GestpayConstants.MODULE_PAYMENT_GESTPAY_SEND_BUYER_LANGUAGE,
+		/* value */ "false",
+		/* description */"True for multi-language sella account",
+		/* groupId */groupId,
+		/* sortO */i++,
+		/* useFun */"",
+		/* setFun */"tep_cfg_select_option(array('true', 'false'), ",
+		/* dateAdd */now);
+
+		configs[i] = new KKConfiguration(
+		/* title */"Is the shop in test mode ?", GestpayConstants.MODULE_PAYMENT_GESTPAY_SEND_CUSTOMINFO,
+		/* value */ "false",
+		/* description */"Depending on sella contract the payment server can accept custom info (i.e the billing country)",
+		/* groupId */groupId,
+		/* sortO */i++,
+		/* useFun */"",
+		/* setFun */"tep_cfg_select_option(array('true', 'false'), ",
+		/* dateAdd */now);
+
+		configs[i] = new KKConfiguration(
+		/* title */"Is the shop in test mode ?", GestpayConstants.MODULE_PAYMENT_GESTPAY_CURRENCY,
+		/* value */ "false",
+		/* description */"True for multi currency sella account",
 		/* groupId */groupId,
 		/* sortO */i++,
 		/* useFun */"",

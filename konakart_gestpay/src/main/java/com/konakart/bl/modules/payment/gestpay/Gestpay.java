@@ -35,7 +35,12 @@ public class Gestpay extends BasePaymentModule implements PaymentInterface {
 	private static String mutex = "gestpayMutex";
 
 	private static int zone;
-	private static Boolean gestPayTestMode;
+	private static Boolean sendBuyerName;
+	private static Boolean sendBuyerEmail;
+	private static Boolean sendBuyerLanguage;
+	private static Boolean sendCustomInfo;
+	private static Boolean sendCurrency;
+
 	private static String gestPayShopId;
 	private static String gestPayRequestUrl;
 
@@ -120,20 +125,27 @@ public class Gestpay extends BasePaymentModule implements PaymentInterface {
 		gestpayCrypt.setShopTransactionID(order.getOrderNumber()
 				+ transactionIdSeparator + Integer.toString(order.getId()));
 
-		// Questi tre nell'ambiente di test no lo vuole
-		// TODO Aggiungere la country per costruire il report del commercialista
-		log.info("Check if on production site Name, email and language settings are ok ... you should also add the country");
-		if (gestPayTestMode.equals(Boolean.FALSE)) {
+		if (sendBuyerName) {
 			gestpayCrypt.setBuyerName(order.getCustomerName());
+		}
+
+		if (sendBuyerEmail) {
 			gestpayCrypt.setBuyerEmail(order.getCustomerEmail());
+		}
+
+		if (sendBuyerLanguage) {
 			gestpayCrypt.setLanguage(rb
 					.getString(GestpayConstants.GESTPAY_LANGUAGE));
+		}
+
+		if (sendCustomInfo) {
 			gestpayCrypt.setCustomInfo("billingCountry="
 					+ order.getBillingCountry());
+		}
+		if (sendCurrency) {
 			gestpayCrypt.setCurrency(GestpayConstants.currencyCode.get(order
 					.getCurrencyCode()));
 		} else {
-			log.info("Running in test mode");
 			gestpayCrypt.setCurrency(GestpayConstants.EURO);
 		}
 
@@ -141,9 +153,7 @@ public class Gestpay extends BasePaymentModule implements PaymentInterface {
 		 * Obligatory parameters
 		 */
 
-		// if (log.isDebugEnabled()) {
 		log.debug(gestpayCrypt.toString());
-		// }
 
 		if (gestpayCrypt.Encrypt()) {
 			parmList.add(new NameValue("a", gestpayCrypt.getShopLogin()));
@@ -213,7 +223,8 @@ public class Gestpay extends BasePaymentModule implements PaymentInterface {
 
 		// If we expect no more communication from GestPay for this order we can
 		// delete the SecretKey
-		// TODO pulire la tabella delle sectret key getEng().deleteOrderIdForSecretKey(info.getSecretKey());
+		// TODO pulire la tabella delle sectret key
+		// getEng().deleteOrderIdForSecretKey(info.getSecretKey());
 
 		return pDetails;
 	}
@@ -255,15 +266,11 @@ public class Gestpay extends BasePaymentModule implements PaymentInterface {
 		}
 		gestPayShopId = conf.getValue();
 
-		conf = getEng().getConfiguration(
-				GestpayConstants.MODULE_PAYMENT_GESTPAY_TEST_MODE);
-		if (conf == null) {
-			throw new KKException(
-					"The Configuration MODULE_PAYMENT_GESTPAY_TEST_MODE must be set to on eof the following values: "
-							+ "True (no extra variables will be added)"
-							+ "False is a live site.");
-		}
-		gestPayTestMode = conf.getBooleanValue();
+		sendBuyerEmail = getBooleanValue(GestpayConstants.MODULE_PAYMENT_GESTPAY_SEND_BUYER_EMAIL);
+		sendBuyerName = getBooleanValue(GestpayConstants.MODULE_PAYMENT_GESTPAY_SEND_BUYER_NAME);
+		sendBuyerLanguage = getBooleanValue(GestpayConstants.MODULE_PAYMENT_GESTPAY_SEND_BUYER_LANGUAGE);
+		sendCustomInfo = getBooleanValue(GestpayConstants.MODULE_PAYMENT_GESTPAY_SEND_CUSTOMINFO);
+		sendCurrency = getBooleanValue(GestpayConstants.MODULE_PAYMENT_GESTPAY_CURRENCY);
 
 		conf = getEng().getConfiguration(
 				GestpayConstants.MODULE_PAYMENT_GESTPAY_ZONE);
@@ -280,5 +287,17 @@ public class Gestpay extends BasePaymentModule implements PaymentInterface {
 		} else {
 			sortOrder = new Integer(conf.getValue()).intValue();
 		}
+	}
+
+	private Boolean getBooleanValue(String paramName) throws KKException {
+		KKConfiguration conf;
+		conf = getEng().getConfiguration(paramName);
+		if (conf == null) {
+			throw new KKException(
+					String.format(
+							"The Configuration %s must be set to true/false",
+							paramName));
+		}
+		return conf.getBooleanValue();
 	}
 }
