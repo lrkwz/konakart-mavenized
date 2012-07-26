@@ -138,7 +138,7 @@ public class Gestpay extends PaymentModule {
 		/* dateAdd */now);
 
 		configs[i] = new KKConfiguration(
-		/* title */"Is the shop in test mode ?", GestpayConstants.MODULE_PAYMENT_GESTPAY_SEND_BUYER_LANGUAGE,
+		/* title */"Send buyer language", GestpayConstants.MODULE_PAYMENT_GESTPAY_SEND_BUYER_LANGUAGE,
 		/* value */ "false",
 		/* description */"True for multi-language sella account",
 		/* groupId */groupId,
@@ -148,7 +148,7 @@ public class Gestpay extends PaymentModule {
 		/* dateAdd */now);
 
 		configs[i] = new KKConfiguration(
-		/* title */"Is the shop in test mode ?", GestpayConstants.MODULE_PAYMENT_GESTPAY_SEND_CUSTOMINFO,
+		/* title */"Send custom info", GestpayConstants.MODULE_PAYMENT_GESTPAY_SEND_CUSTOMINFO,
 		/* value */ "false",
 		/* description */"Depending on sella contract the payment server can accept custom info (i.e the billing country)",
 		/* groupId */groupId,
@@ -158,7 +158,7 @@ public class Gestpay extends PaymentModule {
 		/* dateAdd */now);
 
 		configs[i] = new KKConfiguration(
-		/* title */"Is the shop in test mode ?", GestpayConstants.MODULE_PAYMENT_GESTPAY_CURRENCY,
+		/* title */"Set currency", GestpayConstants.MODULE_PAYMENT_GESTPAY_CURRENCY,
 		/* value */ "false",
 		/* description */"True for multi currency sella account",
 		/* groupId */groupId,
