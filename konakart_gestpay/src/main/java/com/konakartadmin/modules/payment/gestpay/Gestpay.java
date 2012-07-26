@@ -158,7 +158,7 @@ public class Gestpay extends PaymentModule {
 		/* dateAdd */now);
 
 		configs[i] = new KKConfiguration(
-		/* title */"Set currency", GestpayConstants.MODULE_PAYMENT_GESTPAY_CURRENCY,
+		/* title */"Set currency", GestpayConstants.MODULE_PAYMENT_GESTPAY_SEND_CURRENCY,
 		/* value */ "false",
 		/* description */"True for multi currency sella account",
 		/* groupId */groupId,

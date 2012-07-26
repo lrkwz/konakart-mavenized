@@ -270,7 +270,7 @@ public class Gestpay extends BasePaymentModule implements PaymentInterface {
 		sendBuyerName = getBooleanValue(GestpayConstants.MODULE_PAYMENT_GESTPAY_SEND_BUYER_NAME);
 		sendBuyerLanguage = getBooleanValue(GestpayConstants.MODULE_PAYMENT_GESTPAY_SEND_BUYER_LANGUAGE);
 		sendCustomInfo = getBooleanValue(GestpayConstants.MODULE_PAYMENT_GESTPAY_SEND_CUSTOMINFO);
-		sendCurrency = getBooleanValue(GestpayConstants.MODULE_PAYMENT_GESTPAY_CURRENCY);
+		sendCurrency = getBooleanValue(GestpayConstants.MODULE_PAYMENT_GESTPAY_SEND_CURRENCY);
 
 		conf = getEng().getConfiguration(
 				GestpayConstants.MODULE_PAYMENT_GESTPAY_ZONE);
