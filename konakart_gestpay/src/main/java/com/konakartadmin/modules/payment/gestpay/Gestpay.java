@@ -43,7 +43,7 @@ public class Gestpay extends PaymentModule {
 	 */
 	public KKConfiguration[] getConfigs() {
 		if (configs == null) {
-			configs = new KKConfiguration[8];
+			configs = new KKConfiguration[12];
 		}
 
 		if (configs[0] != null && !Utils.isBlank(configs[0].getConfigurationKey())) {
