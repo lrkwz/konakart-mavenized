@@ -15,14 +15,17 @@ import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.tools.generic.DateTool;
 import org.apache.velocity.tools.generic.ListTool;
 
+import com.konakart.al.KKAppEng;
 import com.konakart.app.KKException;
 import com.konakart.appif.KKEngIf;
 import com.konakart.blif.ConfigurationMgrIf;
 import com.konakart.util.FileUtils;
+import com.konakart.util.KKConstants;
 import com.konakart.util.PropertyFileFinder;
 import com.konakartadmin.app.KKAdminException;
 import com.konakartadmin.appif.KKAdminIf;
 import com.konakartadmin.blif.AdminConfigurationMgrIf;
+import com.konakartadmin.ws.KKAdminEngineMgr;
 import com.workingdogs.village.DataSetException;
 
 public class InvoiceUtils {
@@ -51,7 +54,6 @@ public class InvoiceUtils {
 	private static Log log = LogFactory.getLog(InvoiceUtils.class);
 
 	private static final String TEMPLATE_BASE_DIRECTORY = "TEMPLATE_BASE_DIRECTORY";
-	private static final String ORDER_PDF_DIRECTORY = "ORDER_PDF_DIRECTORY";
 	private static final String ORDER_PDF_COMMAND = "ORDER_PDF_COMMAND";
 
 	protected VelocityEngine getVelocityEngine() throws Exception {
@@ -116,7 +118,7 @@ public class InvoiceUtils {
 		String command = String.format(conversionCommand,
 				fnameIn.getAbsoluteFile(), fnameOut.getAbsoluteFile());
 		CommandLineExecuter.execute(command);
-		return fnameOut.getAbsoluteFile().getAbsolutePath();
+		return fnameOut.getName();
 	}
 
 	public void setConversionCommand(AdminConfigurationMgrIf adminConfigMgr)
@@ -129,7 +131,9 @@ public class InvoiceUtils {
 	public void setBaseDir(AdminConfigurationMgrIf adminConfigMgr)
 			throws TorqueException, KKException, DataSetException,
 			KKAdminException, Exception {
-		baseDir = getConfigParameter(adminConfigMgr, ORDER_PDF_DIRECTORY);
+		baseDir = getConfigParameter(adminConfigMgr,
+				KKConstants.CONF_KEY_PDF_BASE_DIRECTORY)
+				+ FileUtils.FILE_SEPARATOR + getStoreId();
 	}
 
 	private String getConfigParameter(AdminConfigurationMgrIf adminConfigMgr,
@@ -166,8 +170,11 @@ public class InvoiceUtils {
 	}
 
 	public void setBaseDir(ConfigurationMgrIf configMgr)
-			throws TorqueException, KKException, DataSetException {
-		baseDir = getConfigParameter(configMgr, ORDER_PDF_DIRECTORY);
+			throws TorqueException, KKException, DataSetException,
+			KKAdminException {
+		baseDir = getConfigParameter(configMgr,
+				KKConstants.CONF_KEY_PDF_BASE_DIRECTORY)
+				+ FileUtils.FILE_SEPARATOR + getStoreId();
 	}
 
 	public void setConversionCommand(ConfigurationMgrIf configMgr)
