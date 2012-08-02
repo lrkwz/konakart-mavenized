@@ -107,6 +107,8 @@ public class InvoiceUtils {
 		if (baseDir == null) {
 			baseDir = "/tmp";
 		}
+		checkDir();
+		
 		File fnameIn = new File(baseDir, "/orderInvoice_" + orderId + ".html");
 		File fnameOut = new File(baseDir, "/orderInvoice_" + orderId + ".pdf");
 		Writer s = new BufferedWriter(new FileWriter(fnameIn));
@@ -119,6 +121,13 @@ public class InvoiceUtils {
 				fnameIn.getAbsoluteFile(), fnameOut.getAbsoluteFile());
 		CommandLineExecuter.execute(command);
 		return fnameOut.getName();
+	}
+
+	private void checkDir() {
+		File base = new File(baseDir);
+		if (!base.exists()) {
+			base.mkdirs();
+		}
 	}
 
 	public void setConversionCommand(AdminConfigurationMgrIf adminConfigMgr)
