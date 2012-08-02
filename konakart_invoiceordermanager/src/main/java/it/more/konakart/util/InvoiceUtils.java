@@ -53,8 +53,8 @@ public class InvoiceUtils {
 
 	private static Log log = LogFactory.getLog(InvoiceUtils.class);
 
-	private static final String TEMPLATE_BASE_DIRECTORY = "TEMPLATE_BASE_DIRECTORY";
-	private static final String ORDER_PDF_COMMAND = "ORDER_PDF_COMMAND";
+	public static final String TEMPLATE_BASE_DIRECTORY = "TEMPLATE_BASE_DIRECTORY";
+	public static final String ORDER_PDF_COMMAND = "ORDER_PDF_COMMAND";
 
 	protected VelocityEngine getVelocityEngine() throws Exception {
 		VelocityEngine localVelocityEngine = new VelocityEngine();
@@ -108,7 +108,7 @@ public class InvoiceUtils {
 			baseDir = "/tmp";
 		}
 		checkDir();
-		
+
 		File fnameIn = new File(baseDir, "/orderInvoice_" + orderId + ".html");
 		File fnameOut = new File(baseDir, "/orderInvoice_" + orderId + ".pdf");
 		Writer s = new BufferedWriter(new FileWriter(fnameIn));
@@ -130,6 +130,11 @@ public class InvoiceUtils {
 		}
 	}
 
+	public void setConversionCommand(String conversionCommand) {
+		this.conversionCommand = conversionCommand;
+	}
+
+	@Deprecated
 	public void setConversionCommand(AdminConfigurationMgrIf adminConfigMgr)
 			throws TorqueException, KKException, DataSetException,
 			KKAdminException, Exception {
@@ -137,6 +142,11 @@ public class InvoiceUtils {
 				ORDER_PDF_COMMAND);
 	}
 
+	public void setBaseDir(String base) {
+		this.baseDir = base;
+	}
+
+	@Deprecated
 	public void setBaseDir(AdminConfigurationMgrIf adminConfigMgr)
 			throws TorqueException, KKException, DataSetException,
 			KKAdminException, Exception {
@@ -178,6 +188,7 @@ public class InvoiceUtils {
 		return paramValue;
 	}
 
+	@Deprecated
 	public void setBaseDir(ConfigurationMgrIf configMgr)
 			throws TorqueException, KKException, DataSetException,
 			KKAdminException {
@@ -186,11 +197,18 @@ public class InvoiceUtils {
 				+ FileUtils.FILE_SEPARATOR + getStoreId();
 	}
 
+	@Deprecated
 	public void setConversionCommand(ConfigurationMgrIf configMgr)
 			throws TorqueException, KKException, DataSetException {
 		conversionCommand = getConfigParameter(configMgr, ORDER_PDF_COMMAND);
 	}
 
+	public void setTemplateBaseDirectory(String templateBaseDirectory)
+			throws KKException, KKAdminException {
+		this.templateBaseDir = getTemplateRoot(templateBaseDirectory);
+	}
+
+	@Deprecated
 	public void setTemplateBaseDirectory(AdminConfigurationMgrIf adminConfigMgr)
 			throws TorqueException, DataSetException, KKAdminException,
 			KKException {
@@ -198,6 +216,7 @@ public class InvoiceUtils {
 				.getConfigurationValue(TEMPLATE_BASE_DIRECTORY));
 	}
 
+	@Deprecated
 	public void setTemplateBaseDirectory(ConfigurationMgrIf configMgr)
 			throws KKException, KKAdminException {
 		this.templateBaseDir = getTemplateRoot(configMgr

@@ -13,6 +13,7 @@ import org.apache.torque.TorqueException;
 import org.apache.torque.util.BasePeer;
 import org.apache.velocity.VelocityContext;
 
+import com.konakart.al.KKAppEng;
 import com.konakart.app.KKException;
 import com.konakart.app.Order;
 import com.konakart.appif.CountryIf;
@@ -23,6 +24,8 @@ import com.konakart.bl.LanguageMgr;
 import com.konakart.bl.OrderIntegrationMgr;
 import com.konakart.bl.OrderMgr;
 import com.konakart.om.BaseOrdersPeer;
+import com.konakart.util.FileUtils;
+import com.konakart.util.KKConstants;
 
 /**
  * @author lrkwz
@@ -78,10 +81,9 @@ public class InvoiceOrderIntegrationMgr extends OrderIntegrationMgr {
 						order.getBillingCountry());
 				LanguageIf lang = getEng().getLanguagePerCode(
 						country.getIsoCode2());
+				//TODO lang can be null!
 				String locale = lang.getLocale();
-
 				velocityContext.put("locale", new Locale(locale));
-
 				InvoiceUtils invoiceUtils = new InvoiceUtils(getEng());
 				invoiceUtils.setBaseDir(getConfigMgr());
 				invoiceUtils.setConversionCommand(getConfigMgr());
