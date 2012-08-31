@@ -79,22 +79,30 @@ public class ProductCustomizationSubtotal extends BaseOrderTotalModule
 		ot.setSortOrder(sd.getSortOrder());
 		BigDecimal subTotal = new BigDecimal(0);
 
+		log.debug(order.toString());
 		OrderProductIf[] products = order.getOrderProducts();
 		if (products != null) {
 			for (OrderProductIf product : products) {
-				OptionIf[] options = product.getOpts();
-				if (options != null) {
-					for (OptionIf option : options) {
-						if (dispPriceWithTax) {
-							subTotal.add((option.getPriceIncTax() != null ? option
-									.getPriceIncTax() : BigDecimal.ZERO));
-						} else {
-							subTotal.add(option.getPriceExTax() != null ? option
-									.getPriceExTax() : BigDecimal.ZERO);
-						}
-
-					}
+				log.debug(product.toString());
+				final BigDecimal price = dispPriceWithTax ? product
+						.getFinalPriceIncTax() : product.getFinalPriceExTax();
+				if (price.compareTo(product.getPrice()) != 0) {
+					log.debug("Difference bewteen final price and price is:"
+							+ price.subtract(product.getPrice()));
+					subTotal = subTotal.add(price.subtract(product.getPrice()));
 				}
+				/**
+				 * OptionIf[] options = product.getOpts(); if (options != null)
+				 * { for (OptionIf option : options) {
+				 * log.debug("option detailes are: " + option.toString()); if
+				 * (dispPriceWithTax) { BigDecimal p = option.getPrice0();
+				 * subTotal.add((option.getPriceIncTax() != null ? option
+				 * .getPriceIncTax() : BigDecimal.ZERO)); } else {
+				 * subTotal.add(option.getPriceExTax() != null ? option
+				 * .getPriceExTax() : BigDecimal.ZERO); }
+				 * 
+				 * } }
+				 */
 			}
 		}
 		log.debug("Subtotal is " + subTotal.toString());
