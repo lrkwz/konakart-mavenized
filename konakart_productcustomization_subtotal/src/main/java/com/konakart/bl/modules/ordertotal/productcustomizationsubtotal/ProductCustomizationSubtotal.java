@@ -84,8 +84,7 @@ public class ProductCustomizationSubtotal extends BaseOrderTotalModule
 		if (products != null) {
 			for (OrderProductIf product : products) {
 				log.debug(product.toString());
-				final BigDecimal price = dispPriceWithTax ? product
-						.getFinalPriceIncTax() : product.getFinalPriceExTax();
+				final BigDecimal price = product.getFinalPriceExTax();
 				if (price.compareTo(product.getPrice()) != 0) {
 					log.debug("Difference bewteen final price and price is:"
 							+ price.subtract(product.getPrice()));
