@@ -86,9 +86,11 @@ public class ProductCustomizationSubtotal extends BaseOrderTotalModule
 				if (options != null) {
 					for (OptionIf option : options) {
 						if (dispPriceWithTax) {
-							subTotal.add(option.getPriceIncTax());
+							subTotal.add((option.getPriceIncTax() != null ? option
+									.getPriceIncTax() : BigDecimal.ZERO));
 						} else {
-							subTotal.add(option.getPriceExTax());
+							subTotal.add(option.getPriceExTax() != null ? option
+									.getPriceExTax() : BigDecimal.ZERO);
 						}
 
 					}
