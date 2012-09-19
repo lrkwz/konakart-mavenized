@@ -99,7 +99,7 @@ public class InvoiceOrderIntegrationMgr extends OrderIntegrationMgr {
 				order.setInvoiceFilename(invoiceUtils.createInvoice(orderId,
 						velocityContext, locale));
 
-				saveOrder(order);
+				saveFileNameInOrder(order);
 
 			} catch (KKException e) {
 				String msg = "KKError changing status for order id: " + orderId
@@ -121,7 +121,7 @@ public class InvoiceOrderIntegrationMgr extends OrderIntegrationMgr {
 		}
 	}
 
-	private void saveOrder(Order order) throws TorqueException {
+	private void saveFileNameInOrder(Order order) throws TorqueException {
 		// Update the invoice filename on the order
 		KKCriteria updateC = getNewCriteria();
 		KKCriteria selectC = getNewCriteria();
