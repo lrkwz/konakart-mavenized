@@ -14,10 +14,13 @@ import org.apache.struts.action.ActionMapping;
 
 import com.konakart.actions.gateways.BaseGatewayAction;
 import com.konakart.al.KKAppEng;
+import com.konakart.app.EmailOptions;
 import com.konakart.app.IpnHistory;
 import com.konakart.app.KKEng;
 import com.konakart.app.KKException;
+import com.konakart.appif.EmailOptionsIf;
 import com.konakart.appif.IpnHistoryIf;
+import com.konakart.appif.KKEngIf;
 import com.konakart.appif.OrderIf;
 import com.konakart.bl.ConfigConstants;
 import com.konakart.bl.modules.payment.gestpay.GestPayCrypt;
@@ -28,6 +31,7 @@ import com.konakart.bl.modules.payment.gestpay.GestpayConstants;
  * @author lrkwz
  */
 public class GestpayAction extends BaseGatewayAction {
+	public static final int FORCE_SEND = 1;
 	private Log log = LogFactory.getLog(GestpayAction.class);
 
 	public ActionForward execute(ActionMapping mapping, ActionForm form,
@@ -163,10 +167,10 @@ public class GestpayAction extends BaseGatewayAction {
 				 * Ritengo che sia inutile, l'order number è sempre nullo inolte
 				 * cambiando tipo di engine (standard vs custom) la funzione di
 				 * ricerca dell'ordine è usabile per i soli ordini dell'utente
-				 * in sessione ed essendo una callback non ce ne è nessuno! 
+				 * in sessione ed essendo una callback non ce ne è nessuno!
 				 * 
-				 * appendOrderNumber2GatewayResponse(sessionId,
-				 * ipnHistory, kkAppEng, gestpayCrypt, orderId);
+				 * appendOrderNumber2GatewayResponse(sessionId, ipnHistory,
+				 * kkAppEng, gestpayCrypt, orderId);
 				 */
 
 				// If successful, we update the inventory as well as changing
@@ -276,4 +280,58 @@ public class GestpayAction extends BaseGatewayAction {
 		str.append(text);
 		ipnHistory.setGatewayFullResponse(str.toString());
 	}
+
+	@Override
+	protected void sendOrderConfirmationMail(KKAppEng kkAppEng, int orderId,
+			boolean success) throws KKException {
+		String countryCode = kkAppEng.getLocale().substring(0, 2);
+
+		sendOrderConfirmationMail(kkAppEng.getEng(), kkAppEng.getSessionId(),
+				countryCode, orderId, success);
+	}
+
+	/**
+	 * Send an order confirmation eMail. The template used is different if the
+	 * order is successful or not.
+	 * 
+	 * @param eng
+	 * @param sessionId
+	 * @param countryCode
+	 * @param orderId
+	 * @param success
+	 * @throws KKException
+	 */
+	@Override
+	protected void sendOrderConfirmationMail(KKEngIf eng, String sessionId,
+			String countryCode, int orderId, boolean success)
+			throws KKException {
+		EmailOptionsIf options = new EmailOptions();
+
+		// Default behaviour is not to create or attach the PDF invoice
+		options.setCreateInvoice(false);
+		options.setAttachInvoice(false);
+
+		options.setCountryCode(countryCode);
+
+		if (success) {
+			options.setTemplateName("OrderConfPaymentSuccess");
+
+			// Attach the invoice to the confirmation email (Enterprise Only).
+			// Defaults to false.
+			// options.setAttachInvoice(true);
+
+			// Create the invoice (if not already present) for attaching to the
+			// confirmation email
+			// (Enterprise Only). Defaults to false.
+			// options.setCreateInvoice(true);
+
+		} else {
+			options.setTemplateName("OrderConfPaymentFailure");
+		}
+
+		options.setCustomInt1(FORCE_SEND);
+		eng.sendOrderConfirmationEmail1(sessionId, orderId, /* langIdForOrder */
+				-1, options);
+	}
+
 }
