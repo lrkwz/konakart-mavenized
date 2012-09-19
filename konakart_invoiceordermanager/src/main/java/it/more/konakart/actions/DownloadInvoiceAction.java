@@ -5,7 +5,7 @@ import it.more.konakart.util.InvoiceUtils;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.Locale;
+import java.io.FileNotFoundException;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -18,9 +18,11 @@ import org.apache.velocity.VelocityContext;
 
 import com.konakart.actions.BaseAction;
 import com.konakart.al.KKAppEng;
-import com.konakart.appif.CountryIf;
-import com.konakart.appif.LanguageIf;
 import com.konakart.appif.OrderIf;
+import com.konakart.bl.ConfigurationMgr;
+import com.konakart.bl.CurrencyMgr;
+import com.konakart.blif.ConfigurationMgrIf;
+import com.konakart.blif.CurrencyMgrIf;
 import com.konakart.util.FileUtils;
 import com.konakart.util.KKConstants;
 
@@ -89,7 +91,9 @@ public class DownloadInvoiceAction extends BaseAction {
 			if (order.getInvoiceFilename() == null
 					|| order.getInvoiceFilename().length() == 0
 					|| !(new File(order.getInvoiceFilename()).exists())) {
-				fullFileName = createInvoice(kkAppEng, order);
+				// fullFileName = createInvoice(kkAppEng, order);
+				throw new FileNotFoundException("Cannot find pdf for order "
+						+ order.getId());
 			}
 
 			File file = new File(fullFileName);
@@ -170,23 +174,15 @@ public class DownloadInvoiceAction extends BaseAction {
 	 */
 	private String createInvoice(KKAppEng kkAppEng, OrderIf order)
 			throws Exception {
-		VelocityContext velocityContext = new VelocityContext();
-		velocityContext.put("order", order);
-		velocityContext.put("storeOwner", kkAppEng.getConfig("STORE_OWNER"));
-		velocityContext.put("storeName", kkAppEng.getConfig("STORE_NAME"));
-		velocityContext.put("storeOwnerEmailAddr",
-				kkAppEng.getConfig("STORE_OWNER_EMAIL_ADDRESS"));
-		velocityContext.put("kk_base_url", kkAppEng.getConfig("KK_BASE_URL"));
-		velocityContext.put("img_base_url", kkAppEng.getConfig("IMG_BASE_URL"));
-		CountryIf country = kkAppEng.getEng().getCountryPerName(
-				order.getBillingCountry());
-		LanguageIf lang = kkAppEng.getEng().getLanguagePerCode(
-				country.getIsoCode2());
-		String locale = (lang != null ? lang.getLocale() : kkAppEng.getLocale());
-
-		velocityContext.put("locale", new Locale(locale));
 
 		InvoiceUtils invoiceUtils = new InvoiceUtils(kkAppEng.getEng());
+
+		CurrencyMgrIf currencyMgr = new CurrencyMgr(kkAppEng.getEng());
+		ConfigurationMgrIf configurationMgr = new ConfigurationMgr(
+				kkAppEng.getEng());
+		VelocityContext velocityContext = invoiceUtils.getVelocityContext(
+				order, kkAppEng.getLocale(), currencyMgr, configurationMgr);
+
 		invoiceUtils
 				.setBaseDir(kkAppEng
 						.getConfig(KKConstants.CONF_KEY_PDF_BASE_DIRECTORY)
@@ -198,7 +194,7 @@ public class DownloadInvoiceAction extends BaseAction {
 				.getConfig(InvoiceUtils.TEMPLATE_BASE_DIRECTORY));
 
 		order.setInvoiceFilename(invoiceUtils.createInvoice(order.getId(),
-				velocityContext, locale));
+				velocityContext, kkAppEng.getLocale()));
 		return invoiceUtils.getBaseDir() + FileUtils.FILE_SEPARATOR
 				+ order.getInvoiceFilename();
 	}
