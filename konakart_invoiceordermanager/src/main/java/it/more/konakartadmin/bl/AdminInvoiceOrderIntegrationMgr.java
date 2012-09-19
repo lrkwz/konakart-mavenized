@@ -89,7 +89,7 @@ public class AdminInvoiceOrderIntegrationMgr extends AdminOrderIntegrationMgr {
 			order.setInvoiceFilename(invoiceUtils.createInvoice(orderId,
 					velocityContext, locale));
 
-			saveOrder(order);
+			saveFileNameInOrder(order);
 
 		} catch (Exception e) {
 			log.error("Cannot print invoice "
@@ -100,7 +100,7 @@ public class AdminInvoiceOrderIntegrationMgr extends AdminOrderIntegrationMgr {
 		}
 	}
 
-	private void saveOrder(AdminOrder order) throws TorqueException {
+	private void saveFileNameInOrder(AdminOrder order) throws TorqueException {
 		// Update the invoice filename on the order
 		KKCriteria updateC = getNewCriteria();
 		KKCriteria selectC = getNewCriteria();
