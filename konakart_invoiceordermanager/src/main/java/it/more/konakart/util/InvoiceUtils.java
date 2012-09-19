@@ -252,4 +252,8 @@ public class InvoiceUtils {
 		return storeId;
 
 	}
+
+	public String getBaseDir() {
+		return this.baseDir;
+	}
 }

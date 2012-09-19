@@ -85,21 +85,12 @@ public class DownloadInvoiceAction extends BaseAction {
 			// Determine whether a pdf document exists on the file system.
 			// Otherwise we create it on
 			// the fly.
+			String fullFileName = order.getInvoiceFilename();
 			if (order.getInvoiceFilename() == null
 					|| order.getInvoiceFilename().length() == 0
 					|| !(new File(order.getInvoiceFilename()).exists())) {
-				createInvoice(kkAppEng, order);
+				fullFileName = createInvoice(kkAppEng, order);
 			}
-
-			// Try to open the file
-			String pdfBase = kkAppEng
-					.getConfig(KKConstants.CONF_KEY_PDF_BASE_DIRECTORY);
-			if (pdfBase == null) {
-				pdfBase = "";
-			}
-			String fullFileName = pdfBase + FileUtils.FILE_SEPARATOR
-					+ KKAppEng.getEngConf().getStoreId()
-					+ FileUtils.FILE_SEPARATOR + order.getInvoiceFilename();
 
 			File file = new File(fullFileName);
 			if (file.canRead() == false) {
@@ -208,7 +199,8 @@ public class DownloadInvoiceAction extends BaseAction {
 
 		order.setInvoiceFilename(invoiceUtils.createInvoice(order.getId(),
 				velocityContext, locale));
-		return order.getInvoiceFilename();
+		return invoiceUtils.getBaseDir() + FileUtils.FILE_SEPARATOR
+				+ order.getInvoiceFilename();
 	}
 
 }
