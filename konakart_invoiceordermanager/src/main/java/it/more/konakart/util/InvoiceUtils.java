@@ -15,7 +15,6 @@ import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.tools.generic.DateTool;
 import org.apache.velocity.tools.generic.ListTool;
 
-import com.konakart.al.KKAppEng;
 import com.konakart.app.KKException;
 import com.konakart.appif.KKEngIf;
 import com.konakart.blif.ConfigurationMgrIf;
@@ -25,7 +24,6 @@ import com.konakart.util.PropertyFileFinder;
 import com.konakartadmin.app.KKAdminException;
 import com.konakartadmin.appif.KKAdminIf;
 import com.konakartadmin.blif.AdminConfigurationMgrIf;
-import com.konakartadmin.ws.KKAdminEngineMgr;
 import com.workingdogs.village.DataSetException;
 
 public class InvoiceUtils {
