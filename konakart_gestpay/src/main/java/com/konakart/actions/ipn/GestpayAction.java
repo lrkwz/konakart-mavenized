@@ -31,7 +31,6 @@ import com.konakart.bl.modules.payment.gestpay.GestpayConstants;
  * @author lrkwz
  */
 public class GestpayAction extends BaseGatewayAction {
-	public static final int FORCE_SEND = 1;
 	private Log log = LogFactory.getLog(GestpayAction.class);
 
 	public ActionForward execute(ActionMapping mapping, ActionForm form,
@@ -329,7 +328,7 @@ public class GestpayAction extends BaseGatewayAction {
 			options.setTemplateName("OrderConfPaymentFailure");
 		}
 
-		options.setCustomInt1(FORCE_SEND);
+		options.setCustomInt1(GestpayConstants.FORCE_SEND);
 		eng.sendOrderConfirmationEmail1(sessionId, orderId, /* langIdForOrder */
 				-1, options);
 	}
