@@ -57,7 +57,6 @@ public class InvoiceUtils {
 	public static final String ORDER_PDF_COMMAND = "ORDER_PDF_COMMAND";
 
 	protected VelocityEngine getVelocityEngine() throws Exception {
-		ResourceTool rtool;
 		VelocityEngine localVelocityEngine = new VelocityEngine();
 		localVelocityEngine.setProperty("file.resource.loader.path", "");
 		String str = PropertyFileFinder
