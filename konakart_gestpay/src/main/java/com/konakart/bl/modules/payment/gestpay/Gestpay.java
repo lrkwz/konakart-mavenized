@@ -130,6 +130,8 @@ public class Gestpay extends BasePaymentModule implements PaymentInterface {
 		} else {
 			gestpayCrypt.setShopTransactionID(Integer.toString(order.getId()));
 		}
+		log.debug("Order id is " + gestpayCrypt.getShopTransactionID()
+				+ "(use order number " + useOrderNumber + ")");
 
 		if (sendBuyerName) {
 			gestpayCrypt.setBuyerName(order.getCustomerName());
@@ -294,6 +296,10 @@ public class Gestpay extends BasePaymentModule implements PaymentInterface {
 		} else {
 			sortOrder = new Integer(conf.getValue()).intValue();
 		}
+
+		if (log.isDebugEnabled()) {
+			log.debug(toString());
+		}
 	}
 
 	private Boolean getBooleanValue(String paramName) throws KKException {
@@ -306,5 +312,24 @@ public class Gestpay extends BasePaymentModule implements PaymentInterface {
 							paramName));
 		}
 		return conf.getBooleanValue();
+	}
+
+	@Override
+	public String toString() {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append(
+				"Shop transaction id separator: '" + transactionIdSeparator
+						+ "'").append("\nUse order number: " + useOrderNumber);
+		buffer.append("\nSend buyer name:" + sendBuyerName);
+		buffer.append("\nSend buyer email:" + sendBuyerEmail);
+		buffer.append("\nSend buyer language:" + sendBuyerLanguage);
+
+		buffer.append("\nSend currency id:" + sendCurrency);
+		buffer.append("Send custom info:" + sendCustomInfo);
+
+		buffer.append("\nShop id: " + gestPayShopId);
+		buffer.append("\nGestpay url: " + gestPayRequestUrl);
+
+		return buffer.toString();
 	}
 }
