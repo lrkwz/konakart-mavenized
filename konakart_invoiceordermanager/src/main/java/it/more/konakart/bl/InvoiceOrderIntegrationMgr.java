@@ -19,6 +19,7 @@ import com.konakart.app.Order;
 import com.konakart.appif.CountryIf;
 import com.konakart.appif.KKEngIf;
 import com.konakart.appif.LanguageIf;
+import com.konakart.appif.OrderIf;
 import com.konakart.bl.KKCriteria;
 import com.konakart.bl.LanguageMgr;
 import com.konakart.bl.OrderIntegrationMgr;
@@ -81,7 +82,7 @@ public class InvoiceOrderIntegrationMgr extends OrderIntegrationMgr {
 						order.getBillingCountry());
 				LanguageIf lang = getEng().getLanguagePerCode(
 						country.getIsoCode2());
-				//TODO lang can be null!
+				// TODO lang can be null!
 				String locale = lang.getLocale();
 				velocityContext.put("locale", new Locale(locale));
 				InvoiceUtils invoiceUtils = new InvoiceUtils(getEng());
@@ -133,5 +134,11 @@ public class InvoiceOrderIntegrationMgr extends OrderIntegrationMgr {
 			log.debug("Updated invoice filename (" + order.getInvoiceFilename()
 					+ ") on order " + order.getId());
 		}
+	}
+
+	@Override
+	public void saveOrder(OrderIf order) {
+		super.saveOrder(order);
+		log.debug("Order " + order.getId() + " has been updated. " + order.toString());
 	}
 }
