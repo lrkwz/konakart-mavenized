@@ -40,6 +40,7 @@ public class Gestpay extends BasePaymentModule implements PaymentInterface {
 	private static Boolean sendBuyerLanguage;
 	private static Boolean sendCustomInfo;
 	private static Boolean sendCurrency;
+	private static Boolean useOrderNumber;
 
 	private static String gestPayShopId;
 	private static String gestPayRequestUrl;
@@ -122,8 +123,13 @@ public class Gestpay extends BasePaymentModule implements PaymentInterface {
 
 		gestpayCrypt.setAmount(order.getTotalIncTax()
 				.setScale(2, RoundingMode.HALF_EVEN).toPlainString());
-		gestpayCrypt.setShopTransactionID(order.getOrderNumber()
-				+ transactionIdSeparator + Integer.toString(order.getId()));
+
+		if (useOrderNumber) {
+			gestpayCrypt.setShopTransactionID(order.getOrderNumber()
+					+ transactionIdSeparator + Integer.toString(order.getId()));
+		} else {
+			gestpayCrypt.setShopTransactionID(Integer.toString(order.getId()));
+		}
 
 		if (sendBuyerName) {
 			gestpayCrypt.setBuyerName(order.getCustomerName());
@@ -271,6 +277,7 @@ public class Gestpay extends BasePaymentModule implements PaymentInterface {
 		sendBuyerLanguage = getBooleanValue(GestpayConstants.MODULE_PAYMENT_GESTPAY_SEND_BUYER_LANGUAGE);
 		sendCustomInfo = getBooleanValue(GestpayConstants.MODULE_PAYMENT_GESTPAY_SEND_CUSTOMINFO);
 		sendCurrency = getBooleanValue(GestpayConstants.MODULE_PAYMENT_GESTPAY_SEND_CURRENCY);
+		useOrderNumber = getBooleanValue(GestpayConstants.MODULE_PAYMENT_GESTPAY_USE_ORDERNUMBER);
 
 		conf = getEng().getConfiguration(
 				GestpayConstants.MODULE_PAYMENT_GESTPAY_ZONE);

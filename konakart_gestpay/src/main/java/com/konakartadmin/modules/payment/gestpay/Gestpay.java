@@ -43,7 +43,7 @@ public class Gestpay extends PaymentModule {
 	 */
 	public KKConfiguration[] getConfigs() {
 		if (configs == null) {
-			configs = new KKConfiguration[12];
+			configs = new KKConfiguration[13];
 		}
 
 		if (configs[0] != null && !Utils.isBlank(configs[0].getConfigurationKey())) {
@@ -158,7 +158,7 @@ public class Gestpay extends PaymentModule {
 		/* dateAdd */now);
 
 		configs[i] = new KKConfiguration(
-		/* title */"Set currency", GestpayConstants.MODULE_PAYMENT_GESTPAY_SEND_CURRENCY,
+		/* title */"Send currency", GestpayConstants.MODULE_PAYMENT_GESTPAY_SEND_CURRENCY,
 		/* value */ "false",
 		/* description */"True for multi currency sella account",
 		/* groupId */groupId,
@@ -175,6 +175,17 @@ public class Gestpay extends PaymentModule {
 		/* sortO */i++,
 		/* useFun */"",
 		/* setFun */"",
+		/* dateAdd */now);
+		
+
+		configs[i] = new KKConfiguration(
+		/* title */"Use Order number", GestpayConstants.MODULE_PAYMENT_GESTPAY_USE_ORDERNUMBER,
+		/* value */ "false",
+		/* description */"True to combine the order number in gestpay transaction-id",
+		/* groupId */groupId,
+		/* sortO */i++,
+		/* useFun */"",
+		/* setFun */"tep_cfg_select_option(array('true', 'false'), ",
 		/* dateAdd */now);
 
 		return configs;

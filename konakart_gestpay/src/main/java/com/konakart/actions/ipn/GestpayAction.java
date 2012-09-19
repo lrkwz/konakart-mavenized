@@ -138,16 +138,7 @@ public class GestpayAction extends BaseGatewayAction {
 
 				appendToFullGatewayResponse(ipnHistory, gestpayCrypt.toString());
 
-				/*
-				 * Get the order associated with the secret key. The secret key
-				 * was sent to GestPay during the original post in the "custom"
-				 * parameter. It is associated to an order and is a safe way of
-				 * determining that the call back from GestPay is genuine as
-				 * long as the callback is SSL.
-				 */
-				String[] secretKey = gestpayCrypt.getShopTransactionID().split(
-						Gestpay.transactionIdSeparator);
-				int orderId = Integer.valueOf(secretKey[1]);
+				int orderId = getOrderId(kkAppEng, gestpayCrypt);
 				if (orderId < 0) {
 					log.error("Cannot find order id from 'shop transaction id' "
 							+ gestpayCrypt.getShopTransactionID());
@@ -243,6 +234,27 @@ public class GestpayAction extends BaseGatewayAction {
 			log.error("Error in gestpay callback " + e.getMessage());
 			return null;
 		}
+	}
+
+	/**
+	 * Get the order associated with the secret key. The secret key was sent to
+	 * GestPay during the original post in the "custom" parameter. It is
+	 * associated to an order and is a safe way of determining that the call
+	 * back from GestPay is genuine as long as the callback is SSL.
+	 */
+	public int getOrderId(KKAppEng kkAppEng, GestPayCrypt gestpayCrypt) {
+		boolean useOrderNumber = Boolean
+				.getBoolean(kkAppEng
+						.getConfig(GestpayConstants.MODULE_PAYMENT_GESTPAY_USE_ORDERNUMBER));
+		int orderId;
+		if (useOrderNumber) {
+			String[] secretKey = gestpayCrypt.getShopTransactionID().split(
+					Gestpay.transactionIdSeparator);
+			orderId = Integer.valueOf(secretKey[1]);
+		} else {
+			orderId = Integer.valueOf(gestpayCrypt.getShopTransactionID());
+		}
+		return orderId;
 	}
 
 	private void appendOrderNumber2GatewayResponse(String sessionId,
