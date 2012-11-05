@@ -25,6 +25,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import org.apache.torque.TorqueException;
@@ -82,8 +83,11 @@ public class ProductDiscount extends BaseOrderTotalModule implements OrderTotalI
     private final static String MODULE_ORDER_TOTAL_PRODUCT_DISCOUNT_STATUS = "MODULE_ORDER_TOTAL_PRODUCT_DISCOUNT_STATUS";
 
     // Message Catalogue Keys
-    // private final static String MODULE_ORDER_TOTAL_PRODUCT_DISCOUNT_TITLE =
-    // "module.order.total.productdiscount.title";
+    private final static String MODULE_ORDER_TOTAL_PRODUCT_DISCOUNT_TITLE =
+     "module.order.total.productdiscount.title";
+
+    private final static String MODULE_ORDER_TOTAL_PRODUCT_DISCOUNT_TEXT =
+    	     "module.order.total.productdiscount.text";
 
     /**
      * Constructor
@@ -312,15 +316,25 @@ public class ProductDiscount extends BaseOrderTotalModule implements OrderTotalI
                             ot.setValue(discount);
                             if (percentageDiscount)
                             {
-                                ot.setText("-" + formattedDiscount);
-                                // Title looks like "-10% Philips TV"
-                                ot.setTitle("-" + discountApplied + "% " + op.getName());
+                            	try{
+	                                ot.setText(String.format(rb.getString(MODULE_ORDER_TOTAL_PRODUCT_DISCOUNT_TEXT), "-", formattedDiscount));
+	                                ot.setTitle(String.format(rb.getString(MODULE_ORDER_TOTAL_PRODUCT_DISCOUNT_TITLE), "-" , discountApplied , "%" , op.getName()));
+                            	} catch (MissingResourceException e){
+	                                ot.setText("-" + formattedDiscount);
+	                                // Title looks like "-10% Philips TV"
+	                                ot.setTitle("-" + discountApplied + "% " + op.getName());
+                            	}
 
                             } else
                             {
-                                ot.setText("-" + formattedDiscount);
-                                // Title looks like "-10EUR Philips TV"
-                                ot.setTitle("-" + formattedDiscount + " " + op.getName());
+                            	try{
+                                    ot.setText(String.format(rb.getString(MODULE_ORDER_TOTAL_PRODUCT_DISCOUNT_TEXT), "-", formattedDiscount));
+                                    ot.setTitle(String.format(rb.getString(MODULE_ORDER_TOTAL_PRODUCT_DISCOUNT_TITLE), "-" , formattedDiscount , "" , op.getName()));
+                            	}  catch (MissingResourceException e){
+	                                ot.setText("-" + formattedDiscount);
+	                                // Title looks like "-10EUR Philips TV"
+	                                ot.setTitle("-" + formattedDiscount + " " + op.getName());
+                            	}
                             }
                         } else
                         {

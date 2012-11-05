@@ -217,5 +217,6 @@
 		<module>konakart_onepagecheckout</module>
 		<module>konakart_gestpay</module>
 		<module>konakart_invoiceordermanager</module>
+		<module>konakart_productcustomization_subtotal</module>
 	</modules>
 </project>
