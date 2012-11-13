@@ -28,6 +28,8 @@ import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.torque.TorqueException;
 
 import com.konakart.app.KKConfiguration;
@@ -42,6 +44,7 @@ import com.konakart.appif.OrderProductIf;
 import com.konakart.bl.modules.BaseModule;
 import com.konakart.bl.modules.ordertotal.BaseOrderTotalModule;
 import com.konakart.bl.modules.ordertotal.OrderTotalInterface;
+import com.konakart.bl.modules.ordertotal.totaldiscount.TotalDiscount;
 import com.workingdogs.village.DataSetException;
 
 /**
@@ -61,6 +64,7 @@ import com.workingdogs.village.DataSetException;
  */
 public class ProductDiscount extends BaseOrderTotalModule implements OrderTotalInterface
 {
+	protected static Log log = LogFactory.getLog(ProductDiscount.class);
 
     // Module name must be the same as the class name although it can be all in lowercase
     private static String code = "ot_product_discount";
@@ -235,9 +239,11 @@ public class ProductDiscount extends BaseOrderTotalModule implements OrderTotalI
                 if (applyBeforeTax)
                 {
                     orderValue = order.getSubTotalExTax();
+                    log.debug("Order value before tax: " + orderValue);
                 } else
                 {
                     orderValue = order.getSubTotalIncTax();
+                    log.debug("Order value after tax: " + orderValue);
                 }
 
                 // If promotion doesn't cover any of the products in the order then go on to the
@@ -386,6 +392,7 @@ public class ProductDiscount extends BaseOrderTotalModule implements OrderTotalI
                 {
                     int scale = new Integer(order.getCurrency().getDecimalPlaces()).intValue();
                     ot.setValue(ot.getValue().setScale(scale, BigDecimal.ROUND_HALF_UP));
+                    log.debug("Order total is :" + ot.toString());
                     orderTotalList.add(ot);
                 }
             }
@@ -397,6 +404,7 @@ public class ProductDiscount extends BaseOrderTotalModule implements OrderTotalI
 
         // Call a helper method to decide which OrderTotal we should return
         OrderTotal retOT = getDiscountOrderTotalFromList(order, orderTotalList);
+        log.debug("Selected order total is: " + retOT);
 
         return retOT;
 
