@@ -219,4 +219,10 @@
 		<module>konakart_invoiceordermanager</module>
 		<module>konakart_productcustomization_subtotal</module>
 	</modules>
+	<repositories>
+		<repository>
+			<id>moreinteractive</id>
+			<url>http://artifactory.moreinteractive.eu/artifactory/repo</url>
+		</repository>
+	</repositories>
 </project>
